@@ -1,35 +1,35 @@
 <template>
   <v-app>
-    <v-app-bar app>
+    <v-app-bar app class="py-1">
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <v-container>
+          <v-row no-gutters>
+            <v-col cols="12" xs="12" sm="6" :align="$vuetify.breakpoint.xsOnly?'center':'left'">
+              <span>乐山职业技术学院</span>
+            </v-col>
+            <v-col cols="12" xs="12" sm="6" :align="$vuetify.breakpoint.xsOnly?'center':'left'">
+              <span class="font-weight-light d-block">{{" 学生满意度调查问卷"}}</span>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
     </v-app-bar>
-    <v-content>
-      <HelloWorld/>
+    <v-content class="my-6">
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import HelloWorld from "./components/HelloWorld";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld,
+    HelloWorld
   },
   data: () => ({
     //
-  }),
+  })
 };
 </script>
