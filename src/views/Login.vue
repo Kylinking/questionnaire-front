@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-        <v-row align="center" justify="center" class="grey lighten-5" style="height:420px">
+        <v-row align="center" justify="center" class="grey lighten-5" style="height:480px">
           <v-card class="ma-3" elevation="8" width="480" height="300">
             <v-text-field
               v-model="id"

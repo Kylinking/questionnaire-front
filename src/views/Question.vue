@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-slider v-model="step" min="0" :max="questions.length-1" readonly></v-slider>
+  <v-container class="mt-12">
+    <v-slider v-model="step" min="0" :max="questions.length-1" readonly class="mt-6"></v-slider>
 
     <v-card class="mx-auto" max-width="500">
       <v-card-title class="title font-weight-regular justify-space-between">
@@ -27,7 +27,14 @@
         <v-card class="mx-auto" max-width="500" v-if="rating == 1">
           <v-card-title class="subtitle-2">不满意的原因以及意见或建议</v-card-title>
           <v-col cols="12">
-            <v-textarea required outlined name="input-7-4" label="不满意原因、意见或建议" v-model="reason"></v-textarea>
+            <v-textarea
+              required
+              outlined
+              name="input-7-4"
+              label="不满意原因、意见或建议"
+              v-model="reason"
+              counter
+            ></v-textarea>
           </v-col>
         </v-card>
       </v-card-text>

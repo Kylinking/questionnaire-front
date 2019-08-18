@@ -1,6 +1,10 @@
 <template>
   <v-app>
+    <aside-Bar></aside-Bar>
     <v-app-bar app class="py-1">
+      <v-toolbar-items>
+        <v-icon large @click="menuClick()" v-show="this.$store.state.showMenu">mdi-menu</v-icon>
+      </v-toolbar-items>
       <v-toolbar-title class="headline text-uppercase">
         <v-container>
           <v-row no-gutters>
@@ -14,22 +18,30 @@
         </v-container>
       </v-toolbar-title>
     </v-app-bar>
-    <v-content class="my-6">
-      <router-view></router-view>
-    </v-content>
+
+    <!-- <v-content class="my-6"> -->
+    <router-view></router-view>
+    <!-- </v-content> -->
   </v-app>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld";
-
+import AsideBar from "./components/AsideBar";
 export default {
   name: "App",
   components: {
-    HelloWorld
+    AsideBar
   },
   data: () => ({
     //
-  })
+  }),
+  methods: {
+    menuClick() {
+      this.$store.state.showAsideBar
+        ? this.$store.commit("HideAsideBar")
+        : this.$store.commit("DisplayAsideBar");
+    }
+  }
 };
 </script>
