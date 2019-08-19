@@ -5,6 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    currentFaculty:{
+      Name:"电信系"
+    },
     showAsideBar: false,
     showMenu: true,
     dynamicComponent: 'statistics'

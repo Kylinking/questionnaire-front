@@ -1,9 +1,9 @@
 <template>
   <v-app>
-    <aside-Bar></aside-Bar>
-    <v-app-bar app class="py-1">
+    <!-- <aside-Bar></aside-Bar> -->
+    <!-- <v-app-bar app class="py-1">
       <v-toolbar-items>
-        <v-icon large @click="menuClick()" v-show="this.$store.state.showMenu">mdi-menu</v-icon>
+        <v-icon large @click="menuClick()" v-show="$store.state.showMenu">mdi-menu</v-icon>
       </v-toolbar-items>
       <v-toolbar-title class="headline text-uppercase">
         <v-container>
@@ -17,17 +17,15 @@
           </v-row>
         </v-container>
       </v-toolbar-title>
-    </v-app-bar>
-
-    <!-- <v-content class="my-6"> -->
+    </v-app-bar> -->
     <router-view></router-view>
-    <!-- </v-content> -->
   </v-app>
 </template>
 
 <script>
 import HelloWorld from "./components/HelloWorld";
 import AsideBar from "./components/AsideBar";
+
 export default {
   name: "App",
   components: {

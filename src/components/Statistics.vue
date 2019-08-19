@@ -1,11 +1,10 @@
 <template>
   <v-container>
-    <v-card class="mx-auto mt-6" max-width="720">
+    <v-card class="mx-auto mt-6" max-width="900px">
       <v-card-title>
         <v-select :items="items" label="问卷提交情况" @change="selectChange" v-model="selection"></v-select>
       </v-card-title>
       <component :is="selected"></component>
-      <p class="text-right font-weight-thin">截止时间：{{ (new Date()).toLocaleString() }}</p>
     </v-card>
   </v-container>
 </template>
@@ -13,14 +12,15 @@
 export default {
   components: {
     CollegeStatistics: () => import("./CollegeStatistics"),
-    about: () => import("../components/HelloWorld.vue")
+    FacultyStatistics: () => import("./FacultyStatistics"),
+    FacultyDetails:() => import("./FacultyDetails"),
+    AnswerStatistics:()=>import ("./AnswerStatistics"),
   },
   name: "Statistics",
-
   data: () => ({
-    selected: "CollegeStatistics",
+    selected: "FacultyDetails",
     items: ["学院汇总", "系部汇总"],
-    selection: "学院汇总",
+    selection: "系部汇总",
     College: [
       {
         total: 5000,
@@ -37,7 +37,7 @@ export default {
       if (this.selection == this.items[0]) {
         this.selected = "CollegeStatistics";
       } else {
-        this.selected = "about";
+        this.selected = "FacultyStatistics";
       }
     }
   }
