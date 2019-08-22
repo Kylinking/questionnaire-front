@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    token:'',
     currentFaculty:{
       Name:"电信系"
     },
@@ -21,6 +22,10 @@ export default new Vuex.Store({
     },
     ChangeComponent(state, payload) {
       state.dynamicComponent = payload.component;
+    },
+    WriteToken(state,payload){
+      state.token = payload.token;
+      localStorage.token = payload.token;
     }
   },
   actions: {
