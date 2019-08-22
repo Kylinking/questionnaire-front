@@ -1,10 +1,11 @@
 <template>
-  <v-container class="mt-12">
-    <v-slider v-model="step" min="0" :max="questions.length-1" readonly class="mt-6"></v-slider>
+  <v-container >
+    <v-slider v-model="step" min="0" :max="questions.length-1" color="primary lighten-3" readonly></v-slider>
 
     <v-card class="mx-auto" max-width="500">
       <v-card-title class="title font-weight-regular justify-space-between">
         <span class="display-1">{{ questions[step].Index }}</span>
+        <span small>{{questions[step].Department}}</span>
       </v-card-title>
 
       <v-window v-model="step">
@@ -13,14 +14,14 @@
         </v-window-item>
       </v-window>
       <v-card-text>
-        <v-row cols="12">
-          <v-col xs="1" class="text-center" align-self="center">
+        <v-row>
+          <v-col cols="3" class="text-center" align-self="center">
             <span class="subtitle-2">不满意</span>
           </v-col>
-          <v-col xs="10" class="text-center" align-self="start">
-            <v-rating v-model="rating" empty-icon="mdi-thumb-up-outline" full-icon="mdi-thumb-up"></v-rating>
+          <v-col  cols="6" class="text-center" align-self="start">
+            <v-rating hover dense v-model="rating" empty-icon="mdi-thumb-down-outline" full-icon="mdi-thumb-up"></v-rating>
           </v-col>
-          <v-col xs="1" class="text-center" align-self="center">
+          <v-col cols="3" class="text-center" align-self="center">
             <span align="center" class="subtitle-2">非常满意</span>
           </v-col>
         </v-row>
@@ -39,28 +40,37 @@
         </v-card>
       </v-card-text>
       <v-card-actions>
-        <v-btn :disabled="step === 0" text @click="back()">Back</v-btn>
+        <v-btn :disabled="step === 0" depressed color="light-blue lighten-3" dark @click="back()">
+          <v-icon>mdi-chevron-double-left</v-icon>
+        </v-btn>
         <v-spacer></v-spacer>
-        <v-btn
-          :disabled="step === questions.length-1"
-          color="primary"
-          depressed
-          @click="next()"
-        >Next</v-btn>
+        <v-btn :disabled="step === questions.length-1" color="primary" depressed @click="next()">
+          <v-icon>mdi-chevron-double-right</v-icon>
+        </v-btn>
       </v-card-actions>
     </v-card>
+    <v-btn color="primary" width="100%" @click="submit()" v-if="step==questions.length-1">提交</v-btn>
   </v-container>
 </template>
 <script>
 export default {
   methods: {
-    next: function() {
-      this.result[this.step] = {
-        questionId: this.step,
+    submit(){
+       this.result.push({
+        questionId: ++this.step,
         rating: this.rating,
         reason: this.reason
-      };
-      this.step++;
+      });
+    },
+    next: function() {
+      this.result.push({
+        questionId: ++this.step,
+        rating: this.rating,
+        reason: this.reason
+      });
+      if (this.step == this.questions.length) {
+        this.buttonNextText = "提交";
+      }
       if (!this.result[this.step]) {
         this.rating = 3;
         this.reason = "";
@@ -82,49 +92,24 @@ export default {
   },
   data() {
     return {
-      currentTitle: "后勤服务",
+      buttonNextText: "Next",
       step: 0,
       rating: 3,
       result: [],
-      questions: [
-        {
-          Id: 1,
-          Index: "课堂育人",
-          Content: "课堂教育教学的育人活动",
-          Department: null,
-          CreatedAt: "2019-08-16 09:37:53",
-          UpdatedAt: "2019-08-16 09:37:53",
-          QuestionnaireId: 1
-        },
-        {
-          Id: 2,
-          Index: "课外育人",
-          Content: "学校开展的课堂教育教学以外的育人活动",
-          Department: null,
-          CreatedAt: "2019-08-16 09:37:53",
-          UpdatedAt: "2019-08-16 09:37:53",
-          QuestionnaireId: 1
-        },
-        {
-          Id: 3,
-          Index: "思想政治课",
-          Content: "学校开设的思想政治理论课程的教材、教师、教学等方面",
-          Department: null,
-          CreatedAt: "2019-08-16 09:37:53",
-          UpdatedAt: "2019-08-16 09:37:53",
-          QuestionnaireId: 1
-        },
-        {
-          Id: 4,
-          Index: "公共基础课",
-          Content: "不含思想政治课的其它公共课程",
-          Department: null,
-          CreatedAt: "2019-08-16 09:37:53",
-          UpdatedAt: "2019-08-16 09:37:53",
-          QuestionnaireId: 1
-        }
-      ]
+      questions: ""
     };
+  },
+  mounted() {
+    let self = this;
+    (async function() {
+      try {
+        let res = await self.$axios.get("/api/v1/questions");
+        console.log(res);
+        if (res) {
+          self.questions = res.data.Data.Questions;
+        }
+      } catch (error) {}
+    })();
   }
 };
 </script>
