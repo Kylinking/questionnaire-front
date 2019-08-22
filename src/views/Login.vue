@@ -16,7 +16,6 @@
               required
               class="mx-12 mt-12"
             ></v-text-field>
-
             <v-text-field
               prepend-icon="mdi-account"
               class="mx-12"
@@ -44,22 +43,53 @@ export default {
       name: "",
       rules: {
         id: value => /^\d{12}$/.test(value) || "学号是12位数字",
-        name: value => value.length <= 20 || "姓名长度过长"
+        name: value =>
+          /^[\u4e00-\u9fa5]{2,20}$/.test(this.name.trim()) || "姓名输入不正确"
       }
     };
   },
   methods: {
     Login() {
-      
       let self = this;
+      if (!this.CheckLoginData()) {
+        return;
+      }
       this.$axios
         .post("/login", {
           Id: this.id,
           Name: this.name
         })
         .then(function(response) {
-          self.$store.commit("WriteToken", { token: response.data.Data.Token });
+          console.log(response);
+          const res = response.data.Data;
+          if (response.data.Data) {
+            const res = response.data.Data;
+            self.$store.commit("SetLoginInfo", {
+              token: res.Token,
+              name: self.name,
+              id: self.id
+            });
+            self.$router.push({ path: "question" });
+          } else {
+            self.$store.commit("ShowErrorBanner", {
+              message: response.data.Error.Message,
+            });
+          }
         });
+    },
+    CheckLoginData() {
+      if (!/^\d{12}$/.test(this.id.trim())) {
+        this.$store.commit("ShowErrorBanner", {
+          message: "学号应是12位数字，请仔细核对！"
+        });
+        return false;
+      } else if (!/^[\u4e00-\u9fa5]{2,20}$/.test(this.name.trim())) {
+        this.$store.commit("ShowErrorBanner", {
+          message: "请检查姓名是否输入正确！"
+        });
+        return false;
+      }
+      return true;
     }
   }
 };

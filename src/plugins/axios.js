@@ -11,6 +11,9 @@ import axios from "axios";
 let config = {
   baseURL: "http://localhost:3000",
   timeout: 60 * 1000, // Timeout
+  headers:{
+    'Token':localStorage.token || ''
+  }
   // withCredentials: true, // Check cross-site Access-Control
 };
 
@@ -41,6 +44,12 @@ _axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+
+
+
+
+
 
 Plugin.install = function (Vue) {
   Vue.axios = _axios;

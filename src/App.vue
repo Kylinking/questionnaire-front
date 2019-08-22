@@ -1,7 +1,10 @@
 <template>
   <v-app>
-    <!-- <aside-Bar></aside-Bar> -->
-    <!-- <v-app-bar app class="py-1">
+    <v-snackbar v-model="$store.state.showAlertBanner" :color="$store.state.alertType" elevation="12" icon="mdi-alert-circle-outline" dark :timeout="2500">
+        <v-icon dark> mdi-alert </v-icon>{{ $store.state.alertBannerMessage }}
+  </v-snackbar>
+    <aside-Bar></aside-Bar>
+    <v-app-bar app class="py-1">
       <v-toolbar-items>
         <v-icon large @click="menuClick()" v-show="$store.state.showMenu">mdi-menu</v-icon>
       </v-toolbar-items>
@@ -16,20 +19,26 @@
             </v-col>
           </v-row>
         </v-container>
+
       </v-toolbar-title>
-    </v-app-bar> -->
+
+    </v-app-bar>
+
+  <v-content>
+      
     <router-view></router-view>
+    </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 import AsideBar from "./components/AsideBar";
-
+import Login from "./views/Login";
 export default {
   name: "App",
   components: {
-    AsideBar
+    AsideBar,
+    Login
   },
   data: () => ({
     //

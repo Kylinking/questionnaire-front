@@ -13,7 +13,7 @@ Vue.use(Router)
 export default new Router({
   routes: [{
       path: '/admin',
-      name: 'login',
+      name: 'admin',
       component: Admin
     },
     {
@@ -22,28 +22,28 @@ export default new Router({
       component: Login
     },
     {
-      path: '/q',
-      name: 'login',
+      path: '/question',
+      name: 'question',
       component: Question
     },
     {
       path: '/cs',
-      name: 'login',
+      name: 'college',
       component: CollegeStatistics
     },
     {
       path: '/fs',
-      name: 'login',
+      name: 'faculty-statistics',
       component: FacultyStatistics
     },
     {
       path: '/fd',
-      name: 'login',
+      name: 'faculty-detail',
       component: FacultyDetails
     },
     {
       path: '/as',
-      name: 'login',
+      name: 'answer-statistics',
       component: AnswerStatistics
     },
     // {
