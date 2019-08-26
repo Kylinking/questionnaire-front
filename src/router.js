@@ -12,9 +12,9 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/admin',
-      name: 'admin',
-      component: Admin
+      path: '/',
+      name: 'home',
+      component: Login
     },
     {
       path: '/login',
@@ -25,27 +25,7 @@ export default new Router({
       path: '/question',
       name: 'question',
       component: Question
-    },
-    {
-      path: '/cs',
-      name: 'college',
-      component: CollegeStatistics
-    },
-    {
-      path: '/fs',
-      name: 'faculty-statistics',
-      component: FacultyStatistics
-    },
-    {
-      path: '/fd',
-      name: 'faculty-detail',
-      component: FacultyDetails
-    },
-    {
-      path: '/as',
-      name: 'answer-statistics',
-      component: AnswerStatistics
-    },
+    }
     // {
     //   path: '/about',
     //   name: 'about',

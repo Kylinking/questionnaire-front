@@ -1,13 +1,18 @@
 <template>
   <v-app>
-    <v-snackbar v-model="$store.state.showAlertBanner" :color="$store.state.alertType" elevation="12" icon="mdi-alert-circle-outline" dark :timeout="2500">
-        <v-icon dark> mdi-alert </v-icon>{{ $store.state.alertBannerMessage }}
-  </v-snackbar>
-    <aside-Bar></aside-Bar>
+    <v-snackbar
+      v-model="$store.state.showAlertBanner"
+      :color="$store.state.alertType"
+      elevation="12"
+      icon="mdi-alert-circle-outline"
+      dark
+      top
+      :timeout="2500"
+    >
+      <v-icon dark>mdi-alert</v-icon>
+      {{ $store.state.alertBannerMessage }}
+    </v-snackbar>
     <v-app-bar app class="py-1">
-      <v-toolbar-items>
-        <v-icon large @click="menuClick()" v-show="$store.state.showMenu">mdi-menu</v-icon>
-      </v-toolbar-items>
       <v-toolbar-title class="headline text-uppercase">
         <v-container>
           <v-row no-gutters>
@@ -19,14 +24,10 @@
             </v-col>
           </v-row>
         </v-container>
-
       </v-toolbar-title>
-
     </v-app-bar>
-
-  <v-content>
-      
-    <router-view></router-view>
+    <v-content>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
@@ -48,6 +49,18 @@ export default {
       this.$store.state.showAsideBar
         ? this.$store.commit("HideAsideBar")
         : this.$store.commit("DisplayAsideBar");
+    }
+  },
+  mounted: function() {
+    if (localStorage.token) {
+      this.$store.commit("SetLoginInfo", {
+        token: localStorage.token,
+        name: localStorage.name,
+        id: localStorage.id
+      });
+      this.$router.push("/question");
+    } else {
+      this.$router.push("/login");
     }
   }
 };

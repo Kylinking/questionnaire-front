@@ -2,26 +2,21 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-
+let defaultState = {
+  // 数据区
+  token:'',
+  id:'',
+  name:'',
+  showAlertBanner:false,
+  alertBannerMessage:'',
+  alertType:'info',
+};
 export default new Vuex.Store({
-  state: {
-    // 测试区
-    currentFaculty:{
-      Name:"电信系"
-    },
-    dynamicComponent: 'statistics',
-
-    // 数据区
-    token:'',
-    id:'',
-    name:'',
-    showAsideBar: false,
-    showMenu: true,
-    showAlertBanner:false,
-    alertBannerMessage:'',
-    alertType:'info',
-  },
+  state: defaultState,
   mutations: {
+    ResetState:function(state){
+      state = defaultState;
+    },
     DisplayAsideBar(state) {
       state.showAsideBar = true;
     },

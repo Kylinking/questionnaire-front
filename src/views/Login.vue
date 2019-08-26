@@ -60,7 +60,6 @@ export default {
           Name: this.name
         })
         .then(function(response) {
-          console.log(response);
           const res = response.data.Data;
           if (response.data.Data) {
             const res = response.data.Data;
@@ -69,6 +68,7 @@ export default {
               name: self.name,
               id: self.id
             });
+            self.$axios.defaults.headers['Token'] = res.Token;
             self.$router.push({ path: "question" });
           } else {
             self.$store.commit("ShowErrorBanner", {
