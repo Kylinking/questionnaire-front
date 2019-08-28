@@ -22,6 +22,11 @@ export default new Router({
       component: Login
     },
     {
+      path: '/admin',
+      name: 'admin',
+      component: Admin
+    },
+    {
       path: '/question',
       name: 'question',
       component: Question

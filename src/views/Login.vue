@@ -69,7 +69,11 @@ export default {
               id: self.id
             });
             self.$axios.defaults.headers['Token'] = res.Token;
-            self.$router.push({ path: "question" });
+            if (res.Admin){
+              self.$router.push({ path: "admin" });
+            }else{
+              self.$router.push({ path: "question" });
+            }            
           } else {
             self.$store.commit("ShowErrorBanner", {
               message: response.data.Error.Message,

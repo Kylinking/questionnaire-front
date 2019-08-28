@@ -52,16 +52,16 @@ export default {
     }
   },
   mounted: function() {
-    if (localStorage.token) {
-      this.$store.commit("SetLoginInfo", {
-        token: localStorage.token,
-        name: localStorage.name,
-        id: localStorage.id
-      });
-      this.$router.push("/question");
-    } else {
-      this.$router.push("/login");
-    }
+    // if (localStorage.token) {
+    //   this.$store.commit("SetLoginInfo", {
+    //     token: localStorage.token,
+    //     name: localStorage.name,
+    //     id: localStorage.id
+    //   });
+    //   this.$router.push("/question");
+    // } else {
+    //   this.$router.push("/login");
+    // }
   }
 };
 </script>
