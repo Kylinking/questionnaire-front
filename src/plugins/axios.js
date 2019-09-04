@@ -9,10 +9,10 @@ import axios from "axios";
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-  baseURL: "http://10.0.0.14:3000",
+  baseURL: "https://wj.lszyxy.cn",
   timeout: 60 * 1000, // Timeout
-  headers:{
-    'Token':localStorage.token || ''
+  headers: {
+    'Token': localStorage.token || ''
   }
   // withCredentials: true, // Check cross-site Access-Control
 };
@@ -40,13 +40,13 @@ _axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if(error.response.status === 401) {
+    if (error.response.status === 401) {
       // 401 说明 token 验证失败
       // 可以直接跳转到登录页面，重新登录获取 token
       location.href = '/#/login'
     } else
-    // Do something with response error
-    return Promise.reject(error);
+      // Do something with response error
+      return Promise.reject(error);
   }
 );
 

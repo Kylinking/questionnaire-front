@@ -16,24 +16,9 @@
         </v-window-item>
       </v-window>
       <v-card-text>
-        <v-row>
-          <v-col cols="3" class="text-center" align-self="center">
-            <span class="subtitle-2">不满意</span>
-          </v-col>
-          <v-col cols="6" class="text-center" align-self="start">
-            <v-rating
-              hover
-              dense
-              length="4"
-              v-model="rating"
-              empty-icon="mdi-thumb-down-outline"
-              full-icon="mdi-thumb-up"
-            ></v-rating>
-          </v-col>
-          <v-col cols="3" class="text-center" align-self="center">
-            <span align="center" class="subtitle-2">非常满意</span>
-          </v-col>
-        </v-row>
+        <v-radio-group v-model="rating" row>
+          <v-radio v-for="n in 4" :key="n" :label="`${options[n-1]}`" :value="n"></v-radio>
+        </v-radio-group>
       </v-card-text>
       <v-card class="mx-auto" max-width="500" v-if="rating == 1" flat>
         <v-card-title class="subtitle-2">不满意的原因以及意见或建议</v-card-title>
@@ -68,20 +53,9 @@
       </v-row>
     </v-card>
     <v-overlay :value="overlay">
-      <v-card height="100" width="250" >
-        <v-card-title primary-title>
-          感谢参与问卷调查！此页面即将关闭
-        </v-card-title>
-      <v-row justify="center">
-        <!-- <v-btn
-          color="success"
-          class="mt-4"
-          @click="quitOverlay"
-        >
-          退出
-        </v-btn> -->
-      </v-row>
-    </v-card>
+      <v-card height="100" width="250">
+        <v-card-title primary-title>感谢参与问卷调查！此页面即将关闭</v-card-title>
+      </v-card>
     </v-overlay>
   </v-container>
 </template>
@@ -89,30 +63,32 @@
 import { constants } from "crypto";
 export default {
   methods: {
-    quitOverlay(){
-       this.overlay = false;
+    quitOverlay() {
+      this.overlay = false;
     },
     submit() {
       let self = this;
       this.result[this.step] = {
-        QuestionId: this.step+1,
+        QuestionId: this.step + 1,
         Select: this.mapRating(this.rating),
         Text: this.reason,
         StudentId: this.$store.state.id
       };
 
-      this.$axios.post("/api/v1/answers", {
-        Answers: self.result
-      }).then(res=>{
-        if (res.data.Data){
-          self.overlay = true;
-          self.$store.commit('ResetState');
-          localStorage.clear();
-          window.setTimeout(function(){
-                window.location.href='about:blank'; 
-          },2000)          
-        }
-      });
+      this.$axios
+        .post("/api/v1/answers", {
+          Answers: self.result
+        })
+        .then(res => {
+          if (res.data.Data) {
+            self.overlay = true;
+            self.$store.commit("ResetState");
+            localStorage.clear();
+            window.setTimeout(function() {
+              window.location.href = "about:blank";
+            }, 2000);
+          }
+        });
     },
     next: function() {
       if (!this.result[this.step]) {
@@ -168,8 +144,9 @@ export default {
       rating: 3,
       result: [],
       questions: "",
-      reason:'',
-      overlay:false,
+      reason: "",
+      overlay: false,
+      options: ["不满意", "基本满意", "满意", "非常满意"]
     };
   },
 
