@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-slider v-model="step" min="0" :max="questions.length-1" color="primary lighten-3" readonly></v-slider>
-
     <v-card class="mx-auto" max-width="500">
       <v-toolbar dark color="purple">
         <v-toolbar-title>{{ questions[step].Index }}</v-toolbar-title>
@@ -16,7 +15,7 @@
         </v-window-item>
       </v-window>
       <v-card-text>
-        <v-radio-group v-model="rating" row>
+        <v-radio-group v-model="rating">
           <v-radio v-for="n in 4" :key="n" :label="`${options[n-1]}`" :value="n"></v-radio>
         </v-radio-group>
       </v-card-text>
@@ -53,7 +52,7 @@
       </v-row>
     </v-card>
     <v-overlay :value="overlay">
-      <v-card height="100" width="250">
+      <v-card>
         <v-card-title primary-title>感谢参与问卷调查！此页面即将关闭</v-card-title>
       </v-card>
     </v-overlay>
