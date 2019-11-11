@@ -11,7 +11,7 @@
       <v-card-title>问卷回收统计</v-card-title>
       <v-data-table :headers="countHeaders" :items="counts" :items-per-page="5"></v-data-table>
       <v-card-title>问卷调查统计</v-card-title>
-
+      <v-select placeholder="2018" class="mx-4" :items="grades" label="年级" v-model="gradeSelect"></v-select>
       <v-data-table :headers="answerHeaders" :items="answers" :items-per-page="5"></v-data-table>
     </v-card>
   </v-container>
@@ -39,11 +39,24 @@ export default {
       faculties: [],
       counts: [],
       answers: [],
-      selection: "学院"
+      selection: "学院",
+      grades: ["2018", "2019"],
+      gradeSelect: "2018"
     };
   },
   watch: {
     selection: function() {
+      this.selectChange();
+    },
+    gradeSelect: function() {
+      this.selectChange();
+    }
+  },
+  mounted() {
+    this.loadTotal();
+  },
+  methods: {
+    selectChange: async function() {
       this.answers.splice(0);
       this.counts.splice(0);
       let self = this;
@@ -52,7 +65,7 @@ export default {
         this.loadTotal();
         return;
       }
-      let url = `/api/v1/statistics/${faculty.Id}`;
+      let url = `/api/v1/statistics/${faculty.Id}?grade=${self.gradeSelect}`;
       (async function() {
         try {
           let res = await self.$axios.get(url);
@@ -76,6 +89,26 @@ export default {
             });
             let ansStat = res.data.Data.TotalAnswers;
             for (let ans of ansStat) {
+              let sum =
+                parseInt(ans.ExtremelySatisfied) +
+                parseInt(ans.Satisfied) +
+                parseInt(ans.ExtremelyUnsatisfied) +
+                parseInt(ans.Unsatisfied);
+              console.log(sum);
+              ans.ExtremelySatisfied +=
+                "/" +
+                ((parseInt(ans.ExtremelySatisfied) / sum) * 100).toFixed(2) +
+                "%";
+              ans.Satisfied +=
+                "/" + ((parseInt(ans.Satisfied) / sum) * 100).toFixed(2) + "%";
+              ans.ExtremelyUnsatisfied +=
+                "/" +
+                ((parseInt(ans.ExtremelyUnsatisfied) / sum) * 100).toFixed(2) +
+                "%";
+              ans.Unsatisfied +=
+                "/" +
+                ((parseInt(ans.Unsatisfied) / sum) * 100).toFixed(2) +
+                "%";
               self.answers.push({
                 ...ans,
                 Index: ans.Question.Index,
@@ -87,16 +120,14 @@ export default {
           self.$store.commit("ShowErrorBanner", { message: error });
         }
       })();
-    }
-  },
-  mounted() {
-    this.loadTotal();
-  },
-  methods: {
+    },
+
     loadTotal: async function() {
       let self = this;
       try {
-        let res = await self.$axios.get("/api/v1/statistics");
+        let res = await self.$axios.get(
+          `/api/v1/statistics?grade=${self.gradeSelect}`
+        );
         if (res) {
           let count = res.data.Data.TotalCount;
           let facultyCount = res.data.Data.FacultyCount;
@@ -120,6 +151,25 @@ export default {
           });
           let ansStat = res.data.Data.TotalAnswers;
           for (let ans of ansStat) {
+            let sum =
+              parseInt(ans.ExtremelySatisfied) +
+              parseInt(ans.Satisfied) +
+              parseInt(ans.ExtremelyUnsatisfied) +
+              parseInt(ans.Unsatisfied);
+            console.log(sum);
+            ans.ExtremelySatisfied +=
+              "/" +
+              ((parseInt(ans.ExtremelySatisfied) / sum) * 100).toFixed(2) +
+              "%";
+            ans.Satisfied +=
+              "/" + ((parseInt(ans.Satisfied) / sum) * 100).toFixed(2) + "%";
+            ans.ExtremelyUnsatisfied +=
+              "/" +
+              ((parseInt(ans.ExtremelyUnsatisfied) / sum) * 100).toFixed(2) +
+              "%";
+            ans.Unsatisfied +=
+              "/" + ((parseInt(ans.Unsatisfied) / sum) * 100).toFixed(2) + "%";
+
             self.answers.push({
               ...ans,
               Index: ans.Question.Index,
@@ -128,6 +178,7 @@ export default {
           }
         }
       } catch (error) {
+        console.error(error);
         self.$store.commit("ShowErrorBanner", { message: error });
       }
     }
