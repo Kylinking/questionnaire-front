@@ -95,20 +95,31 @@ export default {
                 parseInt(ans.ExtremelyUnsatisfied) +
                 parseInt(ans.Unsatisfied);
               console.log(sum);
-              ans.ExtremelySatisfied +=
-                "/" +
-                ((parseInt(ans.ExtremelySatisfied) / sum) * 100).toFixed(2) +
-                "%";
-              ans.Satisfied +=
-                "/" + ((parseInt(ans.Satisfied) / sum) * 100).toFixed(2) + "%";
-              ans.ExtremelyUnsatisfied +=
-                "/" +
-                ((parseInt(ans.ExtremelyUnsatisfied) / sum) * 100).toFixed(2) +
-                "%";
-              ans.Unsatisfied +=
-                "/" +
-                ((parseInt(ans.Unsatisfied) / sum) * 100).toFixed(2) +
-                "%";
+              if (sum == 0) {
+                ans.ExtremelySatisfied += "/0%";
+                ans.Satisfied += "/0%";
+                ans.ExtremelyUnsatisfied += "/0%";
+                ans.Unsatisfied += "/0%";
+              } else {
+                ans.ExtremelySatisfied +=
+                  "/" +
+                  ((parseInt(ans.ExtremelySatisfied) / sum) * 100).toFixed(2) +
+                  "%";
+                ans.Satisfied +=
+                  "/" +
+                  ((parseInt(ans.Satisfied) / sum) * 100).toFixed(2) +
+                  "%";
+                ans.ExtremelyUnsatisfied +=
+                  "/" +
+                  ((parseInt(ans.ExtremelyUnsatisfied) / sum) * 100).toFixed(
+                    2
+                  ) +
+                  "%";
+                ans.Unsatisfied +=
+                  "/" +
+                  ((parseInt(ans.Unsatisfied) / sum) * 100).toFixed(2) +
+                  "%";
+              }
               self.answers.push({
                 ...ans,
                 Index: ans.Question.Index,
@@ -157,19 +168,27 @@ export default {
               parseInt(ans.ExtremelyUnsatisfied) +
               parseInt(ans.Unsatisfied);
             console.log(sum);
-            ans.ExtremelySatisfied +=
-              "/" +
-              ((parseInt(ans.ExtremelySatisfied) / sum) * 100).toFixed(2) +
-              "%";
-            ans.Satisfied +=
-              "/" + ((parseInt(ans.Satisfied) / sum) * 100).toFixed(2) + "%";
-            ans.ExtremelyUnsatisfied +=
-              "/" +
-              ((parseInt(ans.ExtremelyUnsatisfied) / sum) * 100).toFixed(2) +
-              "%";
-            ans.Unsatisfied +=
-              "/" + ((parseInt(ans.Unsatisfied) / sum) * 100).toFixed(2) + "%";
-
+            if (sum == 0) {
+              ans.ExtremelySatisfied += "/0%";
+              ans.Satisfied += "/0%";
+              ans.ExtremelyUnsatisfied += "/0%";
+              ans.Unsatisfied += "/0%";
+            } else {
+              ans.ExtremelySatisfied +=
+                "/" +
+                ((parseInt(ans.ExtremelySatisfied) / sum) * 100).toFixed(2) +
+                "%";
+              ans.Satisfied +=
+                "/" + ((parseInt(ans.Satisfied) / sum) * 100).toFixed(2) + "%";
+              ans.ExtremelyUnsatisfied +=
+                "/" +
+                ((parseInt(ans.ExtremelyUnsatisfied) / sum) * 100).toFixed(2) +
+                "%";
+              ans.Unsatisfied +=
+                "/" +
+                ((parseInt(ans.Unsatisfied) / sum) * 100).toFixed(2) +
+                "%";
+            }
             self.answers.push({
               ...ans,
               Index: ans.Question.Index,
