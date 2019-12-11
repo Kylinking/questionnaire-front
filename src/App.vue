@@ -29,6 +29,13 @@
     <v-content>
       <router-view></router-view>
     </v-content>
+    <v-footer class="font-weight-medium" app>
+      <v-col
+        class="text-center"
+        cols="12"
+        style="color:#999"
+      >by 电子信息工程系&nbsp;&nbsp;&nbsp;&nbsp;移动应用开发专业</v-col>
+    </v-footer>
   </v-app>
 </template>
 
